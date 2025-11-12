@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link, router } from "@inertiajs/react";
 import { Button } from "@/components/ui/button";
