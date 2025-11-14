@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import AppLayout from '@/layouts/AppLayout';
-import { usePage, Inertia } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
+import { Inertia } from '@inertiajs/inertia';
 
 export default function Form() {
     const { todo } = usePage().props;

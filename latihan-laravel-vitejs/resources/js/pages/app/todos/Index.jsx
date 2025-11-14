@@ -1,6 +1,7 @@
 import React from 'react';
 import AppLayout from '@/layouts/AppLayout';
-import { usePage, Inertia } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
+import { Inertia } from '@inertiajs/inertia';
 import TodoItem from '@/components/TodoItem';
 import Pagination from '@/components/Pagination';
 

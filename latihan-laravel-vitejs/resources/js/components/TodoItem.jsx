@@ -1,5 +1,5 @@
 import React from 'react';
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/react'; // ✅ BENAR
 import Swal from 'sweetalert2';
 
 export default function TodoItem({ todo }) {
@@ -10,9 +10,10 @@ export default function TodoItem({ todo }) {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Ya, hapus',
+            cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                Inertia.delete(route('todos.destroy', todo.id));
+                router.delete(route('todos.destroy', todo.id)); // ✅ Ganti Inertia jadi router
             }
         });
     }
