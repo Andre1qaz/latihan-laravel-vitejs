@@ -1,11 +1,31 @@
-import React from "react";
-import { Link, router } from "@inertiajs/react";
+import React, { useEffect } from "react";
+import { Link, router, usePage } from "@inertiajs/react";
 import { Button } from "@/components/ui/button";
+import Swal from 'sweetalert2';
 
 export default function AppLayout({ children }) {
     const onLogout = () => {
         router.get("/auth/logout");
     };
+
+    const { flash } = usePage().props;
+
+    useEffect(() => {
+        if (flash && flash.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: flash.success,
+            });
+        }
+        if (flash && flash.error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: flash.error,
+            });
+        }
+    }, [flash]);
 
     return (
         <div className="min-h-screen bg-background">

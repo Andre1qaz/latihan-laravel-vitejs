@@ -19,7 +19,10 @@ export default function Index() {
             <div className="container mx-auto p-6">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-2xl font-semibold">Daftar Todo</h2>
-                    <a href={route('todos.create')} className="btn btn-primary">Buat Todo</a>
+                    <div className="flex gap-2">
+                        <a href={route('todos.create')} className="btn btn-primary">Buat Todo</a>
+                        <a href={route('todos.stats')} className="btn btn-outline">Statistik</a>
+                    </div>
                 </div>
 
                 <form onSubmit={handleSearch} className="mb-4">

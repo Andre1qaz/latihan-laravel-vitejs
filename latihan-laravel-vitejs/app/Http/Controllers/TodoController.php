@@ -128,9 +128,10 @@ class TodoController extends Controller
     {
         $userId = Auth::id();
 
-        $total = Todo::where('user_id', $userId)->count();
-        $finished = Todo::where('user_id', $userId)->where('is_finished', true)->count();
-        $unfinished = Todo::where('user_id', $userId)->where('is_finished', false)->count();
+        // If the client expects JSON (AJAX / fetch), return data. Otherwise render Inertia page.
+            $total = Todo::where('user_id', $userId)->count();
+            $finished = Todo::where('user_id', $userId)->where('is_finished', true)->count();
+            $unfinished = Todo::where('user_id', $userId)->where('is_finished', false)->count();
 
         // last 7 days counts
         $start = Carbon::now()->subDays(6)->startOfDay();
@@ -151,14 +152,29 @@ class TodoController extends Controller
             $series[] = $found ? $found->count : 0;
         }
 
-        return response()->json([
-            'total' => $total,
-            'finished' => $finished,
-            'unfinished' => $unfinished,
-            'chart' => [
-                'labels' => $labels,
-                'series' => $series,
-            ],
-        ]);
+            $payload = [
+                'total' => $total,
+                'finished' => $finished,
+                'unfinished' => $unfinished,
+                'chart' => [
+                    'labels' => $labels,
+                    'series' => $series,
+                ],
+            ];
+
+            // Return JSON for XHR/fetch, otherwise render Inertia page
+            if ($request->wantsJson() || $request->header('X-Requested-With') === 'XMLHttpRequest') {
+                return response()->json($payload);
+            }
+
+            return Inertia::render('app/todos/Stats', [
+                'stats' => $payload,
+            ]);
+
+        if (request()->wantsJson() || request()->ajax()) {
+            return response()->json($data);
+        }
+
+        return Inertia::render('app/todos/Stats');
     }
 }
